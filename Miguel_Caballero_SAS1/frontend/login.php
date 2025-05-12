@@ -18,15 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
 
-                // Verifica si la contraseña ingresada coincide
                 if (password_verify($contrasena, $row['contrasena'])) {
-                    
-                    $_SESSION['usuario_id'] = $row['id_usuario'];
+                    $_SESSION['usuario_id'] = $row['id_usuario']; 
                     $_SESSION['usuario_nombre'] = $row['nombre_completo'];
                     $_SESSION['usuario_email'] = $row['correo'];
-                    $_SESSION['usuario_rol'] = $row['rol']; 
-
-                    // Redirigir según el rol del usuario
+                    $_SESSION['usuario_rol'] = $row['rol'];
+                
+                    // Redirección según el rol
                     switch ($row['rol']) {
                         case 'admin':
                             header("Location: admin.php");
@@ -44,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             header("Location: ofertas.php");
                             break;
                     }
-                    exit; 
+                    exit;
                 } else {
                     echo "Contraseña incorrecta.";
                 }
@@ -104,3 +102,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </footer>
 </body>
 </html>
+
