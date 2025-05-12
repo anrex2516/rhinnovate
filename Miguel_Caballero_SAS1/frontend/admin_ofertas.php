@@ -1,17 +1,20 @@
 <?php
-
 session_start();
 
+// Si el usuario no tiene una sesion activa y esta ttatando de poner una url en alguna pestaña del navegador lo va redirigir al login 
 if (!isset($_SESSION['usuario_id'])) {
-    
-    header("Location: login.php");
+    echo "No hay sesión activa. Redirigiendo a login...";
+    header("Refresh: 2; URL=login.php"); //Devolver al login pasando 2 segundos
     exit;
-}else {
-    session_destroy();
-    
 }
 
+echo "Sesión activa como: " . $_SESSION['usuario_nombre'] . " (Rol: " . $_SESSION['usuario_rol'] . ")";
+// depuracion para la sesion 
+
+
 include 'db.php';
+
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
