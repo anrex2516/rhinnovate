@@ -1,0 +1,139 @@
+.form-modern {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+body{
+    margin: 0; 
+}
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: #1f1f2e;
+    padding: 20px;
+    width: 240px;
+    color: white;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #c2c2c2;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #35354a;
+    color: #fff;
+}
+.form-modern h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+#nombre{
+    width: 500px;
+}
+#correo{
+    width: 500px;
+}
+#telefono{
+    width: 500px;
+}
+.subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.inputBox {
+    margin-bottom: 20px;
+}
+
+.inputBox label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+button.cancelar {
+    background-color: #f5f5f500;
+border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+ color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.message{
+    position: absolute;
+    margin-left:900px;
+    margin-top: 150px;
+    font-size: 20px;
+}
+
+button.actualizar {
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+button.actualizar:hover {
+    background-color: #333;
+}

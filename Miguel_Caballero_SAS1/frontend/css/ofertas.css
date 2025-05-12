@@ -1,0 +1,59 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #000438;
+    color: #41b3ff;
+}
+
+.navbar {
+    background-color: #000441;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+}
+
+.banner {
+    height: 400px;
+    background: url('bannerde.png') no-repeat center center / cover;
+    position: relative;
+}
+
+.banner .overlay {
+    height: 100%;
+    background-color: rgba(10, 65, 117, 0.493);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h1, .banner p {
+    color: rgb(255, 255, 255);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+footer {
+    background-color: #000438;
+    color: white;
+    padding: 20px 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+.text-center mb-4 fw-bold{
+
+    color: aliceblue;
+}

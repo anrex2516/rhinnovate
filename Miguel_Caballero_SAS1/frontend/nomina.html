@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Nóminas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Gestión de Nómina</h2>
+            </div>
+            <ul>
+                <li><a href="#">Resumen</a></li>
+                <li><a href="#">Empleados</a></li>
+                <li><a href="#">Salarios</a></li>
+                <li><a href="#">Deducciones</a></li>
+                <li><a href="#">Bonificaciones</a></li>
+            </ul>
+            <div class="sidebar-header">
+                <h2>Configuración</h2>
+            </div>
+            <ul>
+                <li><a href="#">Impuestos</a></li>
+                <li><a href="#">Informes</a></li>
+                <li><a href="#">Ajustes</a></li>
+            </ul>
+        </nav>
+        <main class="main-content">
+            <header class="header">
+                <div class="logo">
+                    
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-user"></i>
+                </div>
+            </header>
+            <div class="content">
+                <h1>Panel de Control de Nóminas</h1>
+                <div class="actions">
+                    <input type="text" placeholder="Buscar empleados...">
+                    <button class="btn"><i class="fas fa-user-plus"></i> Agregar Empleado</button>
+                    <button class="btn"><i class="fas fa-file-export"></i> Exportar</button>
+                    <button class="btn"><i class="fas fa-file-alt"></i> Generar Informe</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Puesto</th>
+                            <th>Salario</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Elena Martínez</td>
+                            <td>Gerente de Proyecto</td>
+                            <td>$75.000</td>
+                            <td><span class="status active">Activo</span></td>
+                            <td><i class="fas fa-cog"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>Desarrollador Senior</td>
+                            <td>$65.000</td>
+                            <td><span class="status active">Activo</span></td>
+                            <td><i class="fas fa-cog"></i></td>
+                        </tr>
+                        <tr>
+                            <td>David López</td>
+                            <td>Analista de Datos</td>
+                            <td>$60.000</td>
+                            <td><span class="status inactive">Inactivo</span></td>
+                            <td><i class="fas fa-cog"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Rodríguez</td>
+                            <td>Diseñador UX</td>
+                            <td>$55.000</td>
+                            <td><span class="status active">Activo</span></td>
+                            <td><i class="fas fa-cog"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Sofía Hernández</td>
+                            <td>Desarrollador Junior</td>
+                            <td>$45.000</td>
+                            <td><span class="status active">Activo</span></td>
+                            <td><i class="fas fa-cog"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

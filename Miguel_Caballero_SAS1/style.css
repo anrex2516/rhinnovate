@@ -1,0 +1,216 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden; /* Evita el espacio blanco en la derecha */
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+/* Estilos del carrusel */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+}
+
+.carousel-image {
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-image.active {
+    opacity: 1;
+    position: relative;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+/* Estilos de la barra de navegación */
+.navegacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navegacion img {
+    max-height: 40px;
+}
+
+/* Menú en desktop */
+.navegacion ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navegacion li {
+    cursor: pointer;
+}
+
+.navegacion li:hover {
+    text-decoration: underline;
+}
+
+/* Menú hamburguesa para móviles */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Secciones flexibles */
+.caja {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    border-top: 5px solid rgb(90, 89, 89);
+    margin-top: -100px;
+}
+
+.partiz {
+    width: 40%;
+    background-color: #C99D62;
+    padding: 20px;
+    text-align: center;
+}
+
+.partiz p {
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.partder {
+    width: 60%;
+}
+
+.partder img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Pie de página */
+.footer {
+    background-color: #000;
+    color: white;
+    padding: 20px 0;
+    position: relative;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #222;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-bottom {
+    background-color: #222;
+    color: #aaa;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.social-links {
+    margin-bottom: 20px;
+}
+
+.social-links a {
+    color: #C99D62;
+}
+
+.social-links a:hover {
+    color: white;
+}
+
+/* MEDIA QUERIES PARA RESPONSIVE */
+@media (max-width: 768px) {
+    .navegacion ul li:not(.login, .register) {
+        display: none;
+    }
+
+
+    
+
+    .navegacion li {
+        margin: 10px 0;
+    }
+
+    /* Ajuste del carrusel */
+    .carousel {
+        max-height: 400px;
+    }
+
+    .carousel-btn {
+        font-size: 30px;
+    }
+
+    /* Ajuste del contenido */
+    .caja {
+        flex-direction: column;
+    }
+
+    .partiz, .partder {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-btn {
+        font-size: 24px;
+        padding: 5px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

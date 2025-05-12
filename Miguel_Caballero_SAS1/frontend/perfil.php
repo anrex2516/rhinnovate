@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Empleado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Work+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/perfil.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">RH Innovate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Notificaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Perfil -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4 fw-bold">Mi Perfil</h2>
+        <form>
+            <!-- Foto de perfil -->
+            <div class="text-center mb-4">
+                <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="rounded-circle img-thumbnail" id="fotoPerfil">
+                <div class="mt-3">
+                    <label for="foto" class="form-label">Subir Foto</label>
+                    <input type="file" class="form-control w-50 mx-auto" id="foto" accept="image/*" onchange="previewFoto()">
+                </div>
+            </div>
+
+            <!-- Información personal -->
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre Completo</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu número de teléfono">
+            </div>
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <textarea class="form-control" id="direccion" rows="2" placeholder="Ingresa tu dirección"></textarea>
+            </div>
+
+            <!-- Resumen profesional -->
+            <div class="mb-3">
+                <label for="resumen" class="form-label">Resumen Profesional</label>
+                <textarea class="form-control" id="resumen" rows="3" placeholder="Escribe un breve resumen sobre ti"></textarea>
+            </div>
+
+            <!-- Experiencia laboral -->
+            <div class="mb-3">
+                <label class="form-label">Experiencia Laboral</label>
+                <div id="experiencia">
+                    <div class="d-flex mb-2">
+                        <input type="text" class="form-control me-2" placeholder="Puesto" required>
+                        <input type="text" class="form-control me-2" placeholder="Empresa" required>
+                        <input type="text" class="form-control me-2" placeholder="Duración (e.g., 1 año)">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="agregarExperiencia()">Agregar Más</button>
+            </div>
+
+            <!-- Habilidades -->
+            <div class="mb-3">
+                <label class="form-label">Habilidades</label>
+                <input type="text" class="form-control" id="habilidades" placeholder="Ingresa habilidades separadas por comas (e.g., Python, Trabajo en equipo)">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Guardar Perfil</button>
+        </form>
+    </div>
+
+    <script src="perfil.js"></script>
+</body>
+</html>
