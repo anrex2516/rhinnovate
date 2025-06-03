@@ -1,5 +1,6 @@
 <?php
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar que los datos del formulario se reciban correctamente

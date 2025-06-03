@@ -1,18 +1,6 @@
 <?php
-session_start();
+include_once __DIR__ . '/../backend/db/db.php';
 
-// Si el usuario no tiene una sesion activa y esta ttatando de poner una url en alguna pestaña del navegador lo va redirigir al login 
-if (!isset($_SESSION['usuario_id'])) {
-    echo "No hay sesión activa. Redirigiendo a login...";
-    header("Refresh: 2; URL=login.php"); //Devolver al login pasando 2 segundos
-    exit;
-}
-
-echo "Sesión activa como: " . $_SESSION['usuario_nombre'] . " (Rol: " . $_SESSION['usuario_rol'] . ")";
-// depuracion para la sesion 
-
-
-include 'db.php';
 
 
 
@@ -80,6 +68,9 @@ $result = $conn->query($sql);
         <a href="editar_perfil_supervisor.php">Editar perfil</a>
         <a href="logout.php">Cerrar Sesión</a>
     </div>
+
+<!-- Esto de abajo lo ajustaremos para una parte que va estar arriba como un tipo perfil que quiero que diga el nombre del supervisor que tiene iniciada la sesión  -->
+    <!-- <h1  style="color:red; margin-left:400px;"><?php echo "Sesión activa como: " . $_SESSION['usuario_nombre'] . " (Rol: " . $_SESSION['usuario_rol'] . ")";  ?></h1> -->
 
     <div class="main">
         <h1>Crear Nueva Oferta Laboral</h1>

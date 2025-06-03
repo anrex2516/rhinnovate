@@ -1,14 +1,19 @@
 <?php
-include 'db.php';
-
-session_start(); // Por si necesitas guardar mensajes en sesión
+include_once __DIR__ . '/../backend/db/db.php';
+session_start(); // Para mantener sesión activa
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Validar campos
     if (!isset($_POST['oferta_id'], $_POST['nombre'], $_POST['correo'], $_POST['telefono'], $_FILES['cv'])) {
         $_SESSION['error'] = "Faltan datos para la postulación.";
         header("Location: formulario_postulacion.php?oferta_id=" . urlencode($_POST['oferta_id']));
+        exit();
+    }
+
+    $id_usuario = $_SESSION['usuario_id'] ?? null; // Asegura que la sesión esté activa
+    if (!$id_usuario) {
+        $_SESSION['error'] = "Debes iniciar sesión para postularte.";
+        header("Location: login.php");
         exit();
     }
 
@@ -18,26 +23,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefono = $_POST['telefono'];
     $cv = $_FILES['cv'];
 
-    // Verificar postulación previa
-    $checkQuery = "SELECT id_postulacion FROM postulaciones WHERE correo = ? AND id_oferta = ?";
+    // Validar postulación previa
+    $checkQuery = "SELECT id_postulacion FROM postulaciones WHERE id_usuario = ? AND id_oferta = ?";
     $checkStmt = $conn->prepare($checkQuery);
-    $checkStmt->bind_param("si", $correo, $oferta_id);
+    $checkStmt->bind_param("ii", $id_usuario, $oferta_id);
     $checkStmt->execute();
     $checkResult = $checkStmt->get_result();
 
     if ($checkResult->num_rows > 0) {
-        $_SESSION['error'] = "❌ Ya te has postulado a esta oferta. Solo puedes postularte una vez.";
+        $_SESSION['error'] = "❌ Ya te has postulado a esta oferta.";
         header("Location: formulario_postulacion.php?oferta_id=" . urlencode($oferta_id));
         exit();
     }
 
-    // Subida del CV
+    // Subir archivo CV
     $cv_path = 'uploads/' . basename($cv['name']);
     if (move_uploaded_file($cv['tmp_name'], $cv_path)) {
-        $sql = "INSERT INTO postulaciones (id_oferta, nombre, correo, telefono, cv, fecha_postulacion) VALUES (?, ?, ?, ?, ?, NOW())";
+        $sql = "INSERT INTO postulaciones (id_usuario, id_oferta, nombre, correo, telefono, cv, estado)
+                VALUES (?, ?, ?, ?, ?, ?, 'pendiente')";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param("issss", $oferta_id, $nombre, $correo, $telefono, $cv_path);
+            $stmt->bind_param("iissss", $id_usuario, $oferta_id, $nombre, $correo, $telefono, $cv_path);
             if ($stmt->execute()) {
                 $_SESSION['success'] = "✅ Tu postulación ha sido enviada correctamente.";
             } else {
@@ -52,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $conn->close();
-
-    // Redirige de vuelta al formulario (con el mismo ID)
     header("Location: formulario_postulacion.php?oferta_id=" . urlencode($oferta_id));
     exit();
 }

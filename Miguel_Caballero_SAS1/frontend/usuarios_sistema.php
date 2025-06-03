@@ -1,5 +1,6 @@
 <?php
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
+
 
 $rolFiltro = $_GET['rol'] ?? '';
 $busqueda = $_GET['busqueda'] ?? '';

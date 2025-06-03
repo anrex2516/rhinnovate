@@ -1,5 +1,6 @@
 <?php
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
+
 
 $nombre_completo = 'administrador';
 $correo = 'admin@rhinnovate.pro';

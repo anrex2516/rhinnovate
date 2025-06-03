@@ -7,7 +7,7 @@ if ($_SESSION['role'] != 'supervisor') {
     exit;
 }
 
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
 
 // Si se asignó un horario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

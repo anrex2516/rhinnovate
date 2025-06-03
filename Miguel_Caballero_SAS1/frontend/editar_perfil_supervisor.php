@@ -1,20 +1,22 @@
 <?php
-session_start(); // Iniciar sesión
+session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    // Redirigir al login si no hay sesión activa
-    header("Location: login.php");
-    exit();
-}else {
-    session_destroy();
+    echo "No hay sesión activa. Redirigiendo a login...";
+    header("Refresh: 2; URL=login.php");
+    exit;
 }
 
-include 'db.php'; // Conexión a la base de datos
+ 
+
+
+include_once __DIR__ . '/../backend/db/db.php';
+
+
 
 $usuario_id = $_SESSION['usuario_id'];
 $usuario = null;
 
-// Obtener los datos del usuario autenticado
 $sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
@@ -22,7 +24,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $usuario = $result->fetch_assoc();
 
-// Procesar actualización si se envió el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($update_stmt->execute()) {
         $message = "Perfil actualizado con éxito.";
-        // Refrescar los datos
+ 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
@@ -57,10 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
         .message { color: green; margin-top: 15px; }
-
-
-
-        /**estilos para el icono */
         .profile-container {
             position: absolute;
             top: 20px;

@@ -1,7 +1,7 @@
 <?php
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
 
-// Obtener todas las ofertas activas con la canitidad de postulantes
+// Obtener todas las ofertas activas con la cantidad de postulantes
 $sql = "
     SELECT o.id_oferta, o.titulo, o.departamento, COUNT(p.id_postulacion) AS total_postulantes
     FROM ofertas_empleo o
@@ -11,11 +11,23 @@ $sql = "
 ";
 $ofertas = $conn->query($sql);
 
+// Actualizar estado del postulante si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['cambiar_estado'])) {
+    $id = intval($_POST['id_postulacion']);
+    $estado = $_POST['estado'];
+    $comentario = $_POST['comentario'] ?? '';
+
+    $sqlUpdate = "UPDATE postulaciones SET estado = ?, comentario_supervisor = ? WHERE id_postulacion = ?";
+    $stmt = $conn->prepare($sqlUpdate);
+    $stmt->bind_param("ssi", $estado, $comentario, $id);
+    $stmt->execute();
+    $stmt->close();
+}
+
 // Si se seleccionó una oferta específica
 $postulantes = [];
 if (isset($_GET['id_oferta'])) {
     $id_oferta = intval($_GET['id_oferta']);
-
     $query = "SELECT * FROM postulaciones WHERE id_oferta = $id_oferta";
     $postulantes = $conn->query($query);
 }
@@ -27,6 +39,18 @@ if (isset($_GET['id_oferta'])) {
     <meta charset="UTF-8">
     <title>Postulantes por Oferta</title>
     <link rel="stylesheet" href="ofertas_admin.css">
+    <style>
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center;
+            display: none;
+        }
+        .modal-content {
+            background: #fff; padding: 30px; border-radius: 8px; width: 400px; max-width: 90%;
+        }
+        .close { float: right; font-size: 24px; cursor: pointer; }
+        .acciones button { margin: 0 2px; padding: 4px 10px; }
+    </style>
 </head>
 <body>
 <div class="dashboard">
@@ -44,12 +68,11 @@ if (isset($_GET['id_oferta'])) {
         <p class="sub">Revise y gestione los candidatos para cada oferta laboral.</p>
 
         <form method="GET" class="card">
-            <label for="oferta" >Seleccionar Oferta Laboral</label>
-            <select name="id_oferta" onchange="this.form.submit()" style="padding: 10px; border-radius:5px;">
-                <option value="" style="margin-top:20px; border-bottom:1px solid gray;">Seleccione una oferta laboral</option>
+            <label for="oferta">Seleccionar Oferta Laboral</label>
+            <select name="id_oferta" onchange="this.form.submit()">
+                <option value="">Seleccione una oferta laboral</option>
                 <?php while($row = $ofertas->fetch_assoc()): ?>
-                    <option value="<?php echo $row['id_oferta']; ?>" 
-                        <?php if (isset($_GET['id_oferta']) && $_GET['id_oferta'] == $row['id_oferta']) echo "selected"; ?>>
+                    <option value="<?php echo $row['id_oferta']; ?>" <?php if (isset($_GET['id_oferta']) && $_GET['id_oferta'] == $row['id_oferta']) echo "selected"; ?>>
                         <?php echo $row['titulo'] . " - " . $row['departamento'] . " (" . $row['total_postulantes'] . " postulantes)"; ?>
                     </option>
                 <?php endwhile; ?>
@@ -66,7 +89,8 @@ if (isset($_GET['id_oferta'])) {
                                 <th>Nombre</th>
                                 <th>Correo</th>
                                 <th>Teléfono</th>
-                                <th>Hoja de Vida</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +99,12 @@ if (isset($_GET['id_oferta'])) {
                                     <td><?php echo $postulante['nombre']; ?></td>
                                     <td><?php echo $postulante['correo']; ?></td>
                                     <td><?php echo $postulante['telefono']; ?></td>
-                                    <td><a href="<?php echo $postulante['cv']; ?>" target="_blank">Ver</a></td>
+                                    <td><?php echo $postulante['estado']; ?></td>
+                                    <td class="acciones">
+                                        <button onclick="abrirModal(<?php echo $postulante['id_postulacion']; ?>, 'En proceso')">🕒</button>
+                                        <button onclick="abrirModal(<?php echo $postulante['id_postulacion']; ?>, 'Contratado')">✅</button>
+                                        <button onclick="abrirModal(<?php echo $postulante['id_postulacion']; ?>, 'Rechazado')">❌</button>
+                                    </td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -87,5 +116,35 @@ if (isset($_GET['id_oferta'])) {
         <?php endif; ?>
     </div>
 </div>
+
+<!-- MODAL -->
+<div id="estadoModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <h2 id="modal-titulo">Cambiar Estado</h2>
+    <form id="form-estado" method="POST">
+      <input type="hidden" name="id_postulacion" id="modal-id">
+      <input type="hidden" name="estado" id="modal-estado">
+      <label for="comentario">Comentario para el postulante (opcional)</label>
+      <textarea name="comentario" placeholder="Escribe un comentario..." rows="4"></textarea>
+      <br><br>
+      <button type="button" onclick="cerrarModal()">Cancelar</button>
+      <button type="submit" name="cambiar_estado">Confirmar y enviar</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function abrirModal(id, estado) {
+    document.getElementById('estadoModal').style.display = 'flex';
+    document.getElementById('modal-id').value = id;
+    document.getElementById('modal-estado').value = estado;
+    document.getElementById('modal-titulo').innerText = "Cambiar estado a: " + estado;
+  }
+
+  function cerrarModal() {
+    document.getElementById('estadoModal').style.display = 'none';
+  }
+</script>
 </body>
 </html>

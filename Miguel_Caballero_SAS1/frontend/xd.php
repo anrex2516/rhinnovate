@@ -1,6 +1,7 @@
 
 <?php
-include 'db.php'; // Incluye el archivo de conexión a la base de datos
+include_once __DIR__ . '/../backend/db/db.php';
+ // Incluye el archivo de conexión a la base de datos
 
 session_start();
 

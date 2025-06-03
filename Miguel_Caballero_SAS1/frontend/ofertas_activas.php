@@ -1,31 +1,30 @@
 <?php
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
+
 
 $departamento = $_GET['departamento'] ?? '';
 $busqueda = $_GET['busqueda'] ?? '';
 $orden = $_GET['orden'] ?? 'recientes';
 
-// Consulta SQL base
+
 $sql = "SELECT * FROM ofertas_empleo WHERE 1";
 
-// Filtrar por departamento
 if (!empty($departamento)) {
     $sql .= " AND departamento = ?";
 }
 
-// Filtrar por búsqueda en el título
+
 if (!empty($busqueda)) {
     $sql .= " AND titulo LIKE ?";
 }
 
-// Ordenar
+
 $orderClause = $orden === 'antiguos' ? 'ASC' : 'DESC';
 $sql .= " ORDER BY fecha_publicacion $orderClause";
 
-// Preparar consulta
+
 $stmt = $conn->prepare($sql);
 
-// Bind dinámico
 $params = [];
 $types = '';
 if (!empty($departamento)) {
@@ -46,7 +45,6 @@ if (!empty($params)) {
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Departamentos de Colombia
 $departamentos = [
     "Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá", "Caldas",
     "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca",
@@ -199,6 +197,7 @@ $departamentos = [
                                         </form>
                                         <form method="POST" action="cerrar_oferta.php">
                                             <input type="hidden" name="id_oferta" value="<?php echo $row['id_oferta']; ?>">
+                                            
                                             <button type="submit">Cerrar</button>
                                         </form>
                                     </div>
@@ -229,6 +228,9 @@ window.onclick = function(e) {
         });
     }
 }
+
+
+
 </script>
 </body>
 </html>

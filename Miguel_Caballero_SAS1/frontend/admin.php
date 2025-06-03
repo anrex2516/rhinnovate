@@ -4,11 +4,9 @@ if (!isset($_SESSION['usuario_id'])) {
     
     header("Location: login.php");
     exit;
-}else {
-    session_destroy();
-    
 }
-include 'db.php';
+include_once __DIR__ . '/../backend/db/db.php';
+
 
 $user_info = null;
 $message = '';

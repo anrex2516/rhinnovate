@@ -73,8 +73,15 @@ h2 {
 
 .ofert:hover {
     transform: translateY(-5px);
+    
 }
+.vtf{
+    text-decoration: none; 
+    color: white; 
+    background-color:#000441;
 
+    width: 300px;
+}
 
 @media (max-width: 992px) {
     .ofert {

@@ -102,8 +102,3 @@ button.actualizar {
 button.actualizar:hover {
     background-color: #333;
 }
-.profile-container{
-    position: absolute;
-    right: 600px;
-    top: 185px;
-}

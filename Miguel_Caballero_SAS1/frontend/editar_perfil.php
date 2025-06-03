@@ -1,13 +1,18 @@
 <?php
-session_start(); // Iniciar sesión
 
+
+// Si el usuario no tiene una sesion activa y esta ttatando de poner una url en alguna pestaña del navegador lo va redirigir al login 
+session_start();
+
+// Si el usuario no tiene una sesion activa y esta ttatando de poner una url en alguna pestaña del navegador lo va redirigir al login 
 if (!isset($_SESSION['usuario_id'])) {
-    // Redirigir al login si la sesióon no esta activa
-    header("Location: login.php");
-    exit();
+    echo "No hay sesión activa. Redirigiendo a login...";
+    header("Refresh: 2; URL=login.php"); //Devolver al login pasando 2 segundos
+    exit;
 }
+include_once __DIR__ . '/../backend/db/db.php';
 
-include 'db.php'; 
+
 
 $usuario_id = $_SESSION['usuario_id'];
 $usuario = null;
@@ -57,7 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .message { color: green; margin-top: 15px; }
 
 
-
+ *{
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+ }
         /**estilos para el icono del perfil  */
         .profile-container {
             position: absolute;
@@ -100,11 +108,153 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .profile-menu a:hover {
             background-color: #f0f0f0;
         }
+
+        .sidebar {
+    width: 230px;
+    background-color: #1a1d23;
+    color: #fff;
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar a {
+    display: block;
+    margin: 20px 0;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    color: #fff;
+    font-weight: bold;
+}
+
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 230px;
+            background-color: #1e2a38;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #31465b;
+        }
+
+        .main {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .info-line {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge.pendiente { background-color: #fdf4d6; color: #b58900; }
+        .badge.proceso { background-color: #e0f0ff; color: #0074cc; }
+        .badge.rechazado { background-color: #fce0e0; color: #cc0000; }
+        .badge.contratado { background-color: #d6f4d6; color: #168d00; }
+
+        .comentario {
+            background-color: #edf4ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #003366;
+            font-size: 14px;
+        }
+
+        .ver-detalles {
+            margin-top: 15px;
+            display: inline-block;
+            padding: 7px 14px;
+            background-color: #111;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .ver-detalles:hover {
+            background-color: #444;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .sub {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
     </style>
     <link rel="stylesheet" href="editar_perfil.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
+
+    <div class="sidebar">
+        <h2>Panel Candidato</h2>
+        <p><?php echo $_SESSION['usuario_nombre']; ?></p>
+        <a href="panel_candidato.php" > Mis Postulaciones</a>
+        <a href="editar_perfil.php" class="active"> Editar Perfil</a>
+        <a href="ofertas.php">Volver a las ofertas</a>
+        <a href="logout.php"> Cerrar Sesión</a>
+    </div>
 
 <script>
             function toggleMenu() {
@@ -128,6 +278,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <?php if ($usuario): ?>
+
+
     <div class="form-container">
 
 

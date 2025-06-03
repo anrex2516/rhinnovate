@@ -1,6 +1,8 @@
 <?php
 session_start(); //  iniciar la sesión
-include 'db.php'; 
+include_once __DIR__ . '/../backend/db/db.php';
+
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -102,4 +104,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </footer>
 </body>
 </html>
-
